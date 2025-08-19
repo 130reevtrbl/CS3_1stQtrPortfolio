@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+    <h2>Q1 2nd Graded Exercise submitted by Reeva Emerille Tapia of 9-Strontium</h2>
+
+    <input id="mealprice" type="number" placeholder="Meal Price"> <br>
+    <input id="tip" type="number" placeholder="Tip Percentage"> <br>
+    <input id="service_charge" type="number" placeholder="Service Charge (%)"> <br>
+
+    <button onclick="totalMeal()">Accept Input</button>
+
+    <div id="totalOutput"></div>
+
+    <script>
+        function totalMeal() {
+            const mealPrice = Number(document.getElementById('mealprice').value);
+            const myTip = Number(document.getElementById('tip').value);
+            const serviceCharge = Number(document.getElementById('service_charge').value);
+
+            const total = mealPrice + myTip + (serviceCharge / 100 * mealPrice);
+
+            document.getElementById('totalOutput').innerHTML = "Total Meal: Php " + total.toFixed(2);
+        }
+    </script>
+
+</body>
+</html>
