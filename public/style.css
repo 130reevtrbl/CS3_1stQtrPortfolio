@@ -1,0 +1,103 @@
+body {
+            background: #fffff0;
+            padding: 12px 16px;
+            font-family: "Quicksand", sans-serif;
+        }
+
+        h1 {
+            color: #fae588;
+            text-align: center;
+            margin: 0;
+        }
+
+        h2 {
+            color: #f7cac9;
+            text-align: center;
+            margin: 0;
+        }
+
+        p {
+            color: #dca7bb;
+            text-align: center;
+            margin: 50px 0;
+            font-weight: 1000;
+            border: 15px #ffffff;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 10px 0;
+            color: #34262b;
+            font-size: 14px;
+            font-weight: 700;
+        }
+
+        th, td {
+            border: 7px solid #dca7bb;
+            padding: 12px;
+            text-align: center;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f7cac9;
+        }
+
+        tr:nth-child(odd) {
+            background-color: #fae588;
+        }
+
+        tr:hover {
+            background-color: #fab59a;
+            transition: 0.3s;
+        }
+
+        .center {
+            text-align: center;
+        }
+
+        nav {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        nav ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        nav ul li {
+            display: inline;
+            margin: 0 15px;
+        }
+
+        nav ul li a {
+            color: #fae588;
+            font-weight: bold;
+            text-decoration: none;
+            line-height: 2;
+        }
+
+        nav ul li a:hover {
+            color: #dca7bb;
+        }
+
+        .copyright {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .intro img {
+            float: left;
+            width: 420px;
+            height: 315px;
+            margin-right: 20px;
+            border-radius: 12px;
+        }
+        
+        .intro p {
+            overflow: hidden;
+            text-align: justify;
+            font-weight: 1000;
+            color: #dca7bb;
+        }
