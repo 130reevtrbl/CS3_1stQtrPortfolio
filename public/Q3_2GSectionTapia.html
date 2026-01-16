@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Q3 2nd Graded Exercise - Designing an HTML form</title>
+
+    <style>
+    body {
+        background: #fffff0;
+        padding: 12px 16px;
+        font-family: "Quicksand", sans-serif;
+    }
+
+    form {
+        width: 500px;
+        margin: 30px auto;
+        padding: 25px;
+        background-color: #ffffff;
+        border-radius: 12px;
+        box-shadow: 0 0 12px rgba(0, 0, 0, 0.08);
+        border: 7px solid #dca7bb;
+    }
+
+    fieldset {
+        margin-bottom: 20px;
+        border: 5px solid #f7cac9;
+        padding: 18px;
+        background-color: #fae588;
+        border-radius: 10px;
+    }
+
+    legend {
+        font-weight: 800;
+        color: #34262b;
+        padding: 0 10px;
+        text-align: center;
+    }
+
+    label {
+        display: block;
+        margin-bottom: 14px;
+        font-weight: 700;
+        color: #34262b;
+    }
+
+   input,
+   select,
+   textarea {
+    width: 100%;
+    padding: 8px;
+    margin-top: 6px;
+    border: 3px solid #dca7bb;
+    border-radius: 6px;
+    font-family: "Quicksand", sans-serif;
+    font-size: 14px;
+    background-color: #ffffff;
+    box-sizing: border-box;
+}
+
+    textarea {
+        resize: vertical;
+    }
+
+    input:focus,
+    select:focus,
+    textarea:focus {
+        background-color: #fab59a;
+        border-color: #34262b;
+        outline: none;
+        transition: 0.3s;
+    }
+
+    .invalid {
+        border: 3px solid #ff6b6b;
+        background-color: #ffe6e6;
+    }
+
+    .buttons {
+        text-align: center;
+        margin-top: 15px;
+    }
+
+    .buttons input {
+        width: 130px;
+        margin: 6px;
+        padding: 8px;
+        font-weight: 800;
+        border-radius: 8px;
+        border: 4px solid #dca7bb;
+        background-color: #f7cac9;
+        color: #34262b;
+        cursor: pointer;
+    }
+
+    .buttons input:hover {
+        background-color: #fab59a;
+        transition: 0.3s;
+    }
+</style>
+
+    <script>
+        function confirmSubmit() {
+            return confirm("Are you sure you want to proceed?");
+        }
+
+        function confirmReset() {
+            return confirm("Are you sure you want to reset all entered information?");
+        }
+
+        function checkEmpty(element) {
+            if (element.value.trim() === "") {
+                element.classList.add("invalid");
+            } else {
+                element.classList.remove("invalid");
+            }
+        }
+    </script>
+</head>
+
+<body>
+
+<form method="post" action="submit" onsubmit="return confirmSubmit();" onreset="return confirmReset();">
+
+    <fieldset>
+        <label>
+            Student ID:
+            <input type="number" name="studentID" required onblur="checkEmpty(this)">
+        </label>
+
+        <label>
+            Full Name:
+            <input type="text" name="fullName" required onblur="checkEmpty(this)">
+        </label>
+
+        <label>
+            Birthday:
+            <input type="date" name="birthday" required>
+        </label>
+
+        <label>
+            Email Address:
+            <input type="email" name="email" required onblur="checkEmpty(this)">
+        </label>
+    </fieldset>
+
+    <fieldset>
+        <label>
+            Mobile Phone:
+            <input type="text" name="mobile" required onblur="checkEmpty(this)">
+        </label>
+
+        <label>
+            Grade Level:
+            <select name="gradeLevel" required>
+                <option value="">Select Grade Level</option>
+                <option value="g7">Grade 7</option>
+                <option value="g8">Grade 8</option>
+                <option value="g9">Grade 9</option>
+                <option value="g10">Grade 10</option>
+                <option value="g11">Grade 11</option>
+                <option value="g12">Grade 12</option>
+            </select>
+        </label>
+
+        <label>
+            Intern/Extern:
+            <br>
+            <input type="radio" name="status" value="intern_status" required> Intern
+            <input type="radio" name="status" value="extern_status"> Extern
+        </label>
+
+        <label>
+            Club:
+            <select name="club" required>
+                <option value="">Select Club</option>
+                <option value="film_club">Celluloid</option>
+                <option value="photography_club">Exposure</option>
+                <option value="badminton_club">Volant</option>
+                <option value="volleyball_club">Kislap</option>
+                <option value="chemistry_club">ATOM</option>
+            </select>
+        </label>
+
+        <label>
+            Why do you want to join?
+            <textarea name="reason" rows="4" required onblur="checkEmpty(this)"></textarea>
+        </label>
+    </fieldset>
+
+    <div class="buttons">
+        <input type="submit" value="Submit">
+        <input type="reset" value="Reset">
+    </div>
+
+</form>
+
+</body>
+</html>
