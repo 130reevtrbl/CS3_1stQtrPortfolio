@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>View SignUps</title>
+
+<!-- Google Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=SN+Pro:ital,wght@0,200..900;1,200..900&display=swap" rel="stylesheet">
+
+<style>
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    font-family: "SN Pro", Arial, sans-serif;
+    color: #221F45;
+}
+
+/* Wrap background image in a linear-gradient for overlay */
+body {
+    background: 
+        linear-gradient(rgba(254, 244, 227, 0.8), rgba(254, 244, 227, 0.8)), 
+        url("IMG_5172.JPG") no-repeat center center fixed;
+    background-size: cover;
+    padding: 20px;
+}
+
+/* Headings */
+h1 {
+    text-align: center;
+    color: #bd211c;
+}
+
+h3 {
+    text-align: center;
+    color: #1a5a57;
+}
+
+/* Back link button */
+a {
+    display: inline-block;
+    margin-bottom: 15px;
+    color: #221F45;
+    font-weight: bold;
+    text-decoration: none;
+    padding: 8px 12px;
+    border: 2px solid #bd211c;
+    border-radius: 5px;
+    background-color: #fef4e3;
+}
+
+a:hover {
+    color: #bd211c;
+    background-color: #fff1e0;
+}
+
+/* Dropdown menu */
+select {
+    width: 200px;
+    padding: 8px;
+    color: #221F45;
+    border: 2px solid #bd211c;
+    border-radius: 5px;
+    background-color: #fef4e3;
+}
+
+/* Message boxes */
+.msg {
+    padding: 10px;
+    border: 2px solid #bd211c;
+    background: #fbda5b;
+    margin-top: 10px;
+    display: none;
+    border-radius: 5px;
+    color: #221F45;
+    font-weight: bold;
+}
+
+/* Table */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+    background: #fef4e3;
+    border-radius: 10px;
+    border: 5px solid #bd211c;
+    display: none;
+}
+
+th, td {
+    padding: 15px;
+    text-align: left;
+    color: #221F45;
+    border: 2px solid #bd211c;
+}
+
+th {
+    background-color: #1a5a57;
+    color: #fef4e3;
+}
+
+td {
+    background-color: #fbda5b;
+}
+
+#total {
+    font-weight: bold;
+    margin-top: 15px;
+    color: #221F45;
+}
+
+label[for="clubFilter"] {
+    background-color: #fef4e3;
+    padding: 0 5px;
+}
+</style>
+
+<script>
+function loadData() {
+    const clubFilter = document.getElementById("clubFilter");
+    const total = document.getElementById("total");
+    const users = JSON.parse(localStorage.getItem("users")) || [];
+    const club = clubFilter.value;
+
+    const tbody = document.getElementById("tbody");
+    const table = document.getElementById("table");
+    const msgNone = document.getElementById("msgNone");
+    const msgClub = document.getElementById("msgClub");
+
+    tbody.innerHTML = "";
+
+    if (users.length === 0) {
+        table.style.display = "none";
+        msgNone.style.display = "block";
+        msgClub.style.display = "none";
+        total.innerText = "Total Signup: 0";
+        return;
+    }
+
+    let filtered = users;
+    if (club !== "ALL") {
+        filtered = users.filter(u => u.preferredClub === club);
+    }
+
+    if (filtered.length === 0) {
+        table.style.display = "none";
+        msgClub.style.display = "block";
+        msgNone.style.display = "none";
+        total.innerText = "Total Signup: 0";
+    } else {
+        table.style.display = "table";
+        msgClub.style.display = "none";
+        msgNone.style.display = "none";
+
+        filtered.forEach(u => {
+            tbody.innerHTML += `
+            <tr>
+                <td>${u.preferredClub}</td>
+                <td>${u.studentID}</td>
+                <td>${u.fullName}</td>
+                <td>${u.gradeLevel}</td>
+                <td>${u.emailAddress}</td>
+                <td>${u.mobilePhone}</td>
+                <td>${u.status}</td>
+            </tr>`;
+        });
+
+        total.innerText = "Total Signup: " + filtered.length;
+    }
+}
+
+window.onload = loadData;
+</script>
+</head>
+
+<body>
+
+<h1>Show List of Students Who Signed-Up</h1>
+<h3>by Reeva Emerille Tapia</h3>
+
+<a href="Q3_2GSectionTapia.html">← Back to Signup</a>
+
+<br><br>
+
+<label for="clubFilter">Select Your Club</label>
+<select id="clubFilter" onchange="loadData()">
+<option value="ALL">ALL</option>
+<option value="ATOM">ATOM</option>
+<option value="Celluloid">Celluloid</option>
+<option value="Exposure">Exposure</option>
+<option value="Kislap">Kislap</option>
+<option value="Volant">Volant</option>
+</select>
+
+<h3 id="total"></h3>
+
+<div id="msgNone" class="msg">No sign-ups have been recorded yet.</div>
+<div id="msgClub" class="msg">No Sign Ups for the club.</div>
+
+<table id="table">
+<thead>
+<tr>
+<th>Club</th>
+<th>ID</th>
+<th>Fullname</th>
+<th>Grade</th>
+<th>Email</th>
+<th>Mobile</th>
+<th>Intern | Extern</th>
+</tr>
+</thead>
+<tbody id="tbody"></tbody>
+</table>
+
+</body>
+</html>

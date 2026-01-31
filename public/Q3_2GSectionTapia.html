@@ -1,196 +1,212 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>Q3 2nd Graded Exercise - Designing an HTML form</title>
+<meta charset="UTF-8">
+<title>2nd Graded Exercise</title>
 
-    <style>
-    body {
-        background: #fffff0;
-        padding: 12px 16px;
-        font-family: "Quicksand", sans-serif;
-    }
+<!-- Preconnect for Google Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-    form {
-        width: 500px;
-        margin: 30px auto;
-        padding: 25px;
-        background-color: #ffffff;
-        border-radius: 12px;
-        box-shadow: 0 0 12px rgba(0, 0, 0, 0.08);
-        border: 7px solid #dca7bb;
-    }
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=SN+Pro:ital,wght@0,200..900;1,200..900&display=swap" rel="stylesheet">
 
-    fieldset {
-        margin-bottom: 20px;
-        border: 5px solid #f7cac9;
-        padding: 18px;
-        background-color: #fae588;
-        border-radius: 10px;
-    }
-
-    legend {
-        font-weight: 800;
-        color: #34262b;
-        padding: 0 10px;
-        text-align: center;
-    }
-
-    label {
-        display: block;
-        margin-bottom: 14px;
-        font-weight: 700;
-        color: #34262b;
-    }
-
-   input,
-   select,
-   textarea {
-    width: 100%;
-    padding: 8px;
-    margin-top: 6px;
-    border: 3px solid #dca7bb;
-    border-radius: 6px;
-    font-family: "Quicksand", sans-serif;
-    font-size: 14px;
-    background-color: #ffffff;
-    box-sizing: border-box;
+<style>
+body {
+    font-family: "SN Pro", Arial, sans-serif;
+    color: #221F45; /* page text color */
+    background-image: url("IMG_5172.JPG");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
 }
 
-    textarea {
-        resize: vertical;
-    }
+form {
+    font-family: "SN Pro", Arial, sans-serif;
+    color: #221F45; /* form text color */
+    width: 520px;
+    margin: auto;
+    padding: 20px;
+    background: #fef4e3;
+    border-radius: 10px;
+    border: 5px solid #bd211c;
+}
 
-    input:focus,
-    select:focus,
-    textarea:focus {
-        background-color: #fab59a;
-        border-color: #34262b;
-        outline: none;
-        transition: 0.3s;
-    }
+fieldset {
+    margin-bottom: 15px;
+    padding: 15px;
+    background: #fbda5b;
+    color: #221F45; /* ensures fieldset text matches */
+}
 
-    .invalid {
-        border: 3px solid #ff6b6b;
-        background-color: #ffe6e6;
-    }
+label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px; 
+    color: #221F45; /* ensures labels are the correct color */
+}
 
-    .buttons {
-        text-align: center;
-        margin-top: 15px;
-    }
+input, select, textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px; 
+    font-family: "SN Pro", Arial, sans-serif;
+    box-sizing: border-box; 
+    color: #221F45; /* text inside inputs/selects/textarea */
+    border: 1px solid #ccc; /* optional: make input borders visible */
+}
 
-    .buttons input {
-        width: 130px;
-        margin: 6px;
-        padding: 8px;
-        font-weight: 800;
-        border-radius: 8px;
-        border: 4px solid #dca7bb;
-        background-color: #f7cac9;
-        color: #34262b;
-        cursor: pointer;
-    }
+textarea {
+    resize: vertical;
+}
 
-    .buttons input:hover {
-        background-color: #fab59a;
-        transition: 0.3s;
-    }
+.status-group {
+    margin-bottom: 20px;
+}
+
+.radio-label {
+    display: inline-block;
+    margin-right: 20px;
+    font-weight: normal;
+    color: #221F45; /* radio button text color */
+    vertical-align: middle;
+}
+
+.status-group input[type="radio"] {
+    margin-right: 5px; 
+    vertical-align: middle;
+}
+
+.buttons {
+    text-align: center;
+    margin-top: 15px;
+}
+
+.buttons button {
+    padding: 10px 14px;
+    font-weight: bold;
+    margin: 5px;
+    font-family: "SN Pro", Arial, sans-serif;
+    color: #fef4e3; /* button text color */
+    background-color: #1a5a57; /* matches form background */
+    border: 2px solid #221f45;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease; /* smooth hover effect */
+}
+
+.buttons button:hover {
+    background-color: #1A5A57; /* updated hover color */
+    color: #ffffff; /* optional: text turns white on hover for contrast */
+}
 </style>
 
-    <script>
-        function confirmSubmit() {
-            return confirm("Are you sure you want to proceed?");
-        }
+<script>
+function confirmSubmit() {
+    if (!confirm("Are you sure you want to submit?")) {
+        return false;
+    }
 
-        function confirmReset() {
-            return confirm("Are you sure you want to reset all entered information?");
-        }
+    // READ FORM DATA (matching your input IDs)
+    const data = {
+        studentID: document.getElementById("studentID").value,
+        fullName: document.getElementById("fullName").value,
+        birthday: document.getElementById("birthday").value,
+        emailAddress: document.getElementById("email").value,       // changed key
+        mobilePhone: document.getElementById("mobilePhone").value,  // changed key
+        gradeLevel: document.getElementById("gradeLevel").value,
+        status: document.querySelector('input[name="status"]:checked')?.value,
+        preferredClub: document.getElementById("preferredClub").value,  // changed key
+        reason: document.getElementById("reason").value
+    };
 
-        function checkEmpty(element) {
-            if (element.value.trim() === "") {
-                element.classList.add("invalid");
-            } else {
-                element.classList.remove("invalid");
-            }
-        }
-    </script>
+    // GET EXISTING STORAGE OR INIT ARRAY
+    let users = JSON.parse(localStorage.getItem("users"));
+    if (!users) users = [];
+
+    // ADD NEW ENTRY
+    users.push(data);
+
+    // SAVE BACK AS STRING
+    localStorage.setItem("users", JSON.stringify(users));
+
+    alert("Signup saved!");
+
+    return false; // prevent reload
+}
+
+function goToView() {
+    window.location.href = "viewSignUps.html";
+}
+</script>
 </head>
 
 <body>
 
-<form method="post" action="submit" onsubmit="return confirmSubmit();" onreset="return confirmReset();">
+<form onsubmit="return confirmSubmit();">
 
-    <fieldset>
-        <label>
-            Student ID:
-            <input type="number" name="studentID" required onblur="checkEmpty(this)">
-        </label>
+<fieldset>
+<label>Student ID
+<input id="studentID" required>
+</label>
 
-        <label>
-            Full Name:
-            <input type="text" name="fullName" required onblur="checkEmpty(this)">
-        </label>
+<label>Full Name
+<input id="fullName" required>
+</label>
 
-        <label>
-            Birthday:
-            <input type="date" name="birthday" required>
-        </label>
+<label>Birthday
+<input type="date" id="birthday" required>
+</label>
 
-        <label>
-            Email Address:
-            <input type="email" name="email" required onblur="checkEmpty(this)">
-        </label>
-    </fieldset>
+<label>Email Address
+<input type="emailAddress" id="email" required>
+</label>
+</fieldset>
 
-    <fieldset>
-        <label>
-            Mobile Phone:
-            <input type="text" name="mobile" required onblur="checkEmpty(this)">
-        </label>
+<fieldset>
+<label>Mobile Phone
+<input id="mobilePhone" required>
+</label>
 
-        <label>
-            Grade Level:
-            <select name="gradeLevel" required>
-                <option value="">Select Grade Level</option>
-                <option value="g7">Grade 7</option>
-                <option value="g8">Grade 8</option>
-                <option value="g9">Grade 9</option>
-                <option value="g10">Grade 10</option>
-                <option value="g11">Grade 11</option>
-                <option value="g12">Grade 12</option>
-            </select>
-        </label>
+<label>Grade Level
+<select id="gradeLevel" required>
+<option value="">Select</option>
+<option value="Grade 7">Grade 7</option>
+<option value="Grade 8">Grade 8</option>
+<option value="Grade 9">Grade 9</option>
+<option value="Grade 10">Grade 10</option>
+<option value="Grade 11">Grade 11</option>
+<option value="Grade 12">Grade 12</option>
+</select>
+</label>
 
-        <label>
-            Intern/Extern:
-            <br>
-            <input type="radio" name="status" value="intern_status" required> Intern
-            <input type="radio" name="status" value="extern_status"> Extern
-        </label>
+<label>Status</label>
+<input type="radio" name="status" value="Intern" required> Intern
+<input type="radio" name="status" value="Extern"> Extern
 
-        <label>
-            Club:
-            <select name="club" required>
-                <option value="">Select Club</option>
-                <option value="film_club">Celluloid</option>
-                <option value="photography_club">Exposure</option>
-                <option value="badminton_club">Volant</option>
-                <option value="volleyball_club">Kislap</option>
-                <option value="chemistry_club">ATOM</option>
-            </select>
-        </label>
+<label>Preferred Club
+<select id="preferredClub" required>
+<option value="">Select</option>
+<option value="ATOM">ATOM</option>
+<option value="Celluloid">Celluloid</option>
+<option value="Exposure">Exposure</option>
+<option value="Kislap">Kislap</option>
+<option value="Volant">Volant</option>
+</select>
+</label>
 
-        <label>
-            Why do you want to join?
-            <textarea name="reason" rows="4" required onblur="checkEmpty(this)"></textarea>
-        </label>
-    </fieldset>
+<label>Why do you want to join?
+<textarea id="reason" required></textarea>
+</label>
 
-    <div class="buttons">
-        <input type="submit" value="Submit">
-        <input type="reset" value="Reset">
-    </div>
+</fieldset>
+
+<div class="buttons">
+<button type="submit">Submit</button>
+<button type="reset">Reset</button>
+<button type="button" onclick="goToView()">View Signups</button>
+</div>
 
 </form>
 
