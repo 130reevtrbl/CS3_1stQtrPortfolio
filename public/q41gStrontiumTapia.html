@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Movie List Manager</title>
+    <title>Movie Rating with UD</title>
     <link href="https://fonts.googleapis.com/css2?family=Bungee&display=swap" rel="stylesheet">
     <style>
         body { 
@@ -16,13 +16,14 @@
             background-size: 40px 40px;
         }
         .container { 
-            width: 350px; 
+            width: 400px; 
             border: 2px solid #FD8558; 
             padding: 20px; 
             border-radius: 8px; 
             background-color: #FBFDF7;
         }
         .form-group { margin-bottom: 15px; }
+        label { display: block; margin-bottom: 5px; }
         input, select { 
             width: 100%; 
             padding: 8px; 
@@ -35,7 +36,8 @@
         }
         .stars { cursor: pointer; font-size: 24px; color: #ccc; }
         .stars span.active { color: gold; }
-        button { 
+        
+        .add-btn { 
             width: 100%; 
             padding: 10px; 
             background: #86CCCC; 
@@ -43,21 +45,41 @@
             border: none; 
             cursor: pointer;
             font-family: 'Bungee', cursive;
+            margin-bottom: 20px;
         }
-        button:hover { opacity: 0.9; }
+        .add-btn:hover { opacity: 0.9; }
+
         .movie-item { 
             border: 1px solid #FD8558; 
             padding: 10px; 
             margin-top: 10px; 
             border-radius: 4px; 
             background: rgba(255, 255, 255, 0.5);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 12px;
         }
+        
+        .delete-btn {
+            background-color: #FD8558;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+            font-family: 'Bungee', cursive;
+            font-size: 10px;
+            border-radius: 4px;
+        }
+        .delete-btn:hover { background-color: #e06d45; }
+        
+        h2, h3 { text-align: center; }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <h2>Add a Movie</h2>
+    <h2>Add / Update a Movie Rating</h2>
     <div class="form-group">
         <label>Title:</label>
         <input type="text" id="title">
@@ -69,16 +91,13 @@
     <div class="form-group">
         <label>Genre:</label>
         <select id="genre">
-            <option>Thriller</option>
-            <option>Romance</option>
-            <option>Comedy</option>
-            <option>Fantasy</option>
-            <option>Drama</option>
             <option>Action</option>
-            <option>Adventure</option>
-            <option>Animated</option>
+            <option>Comedy</option>
+            <option>Drama</option>
+            <option>Fantasy</option>
             <option>Sci-Fi</option>
-            <option>Mystery</option>
+            <option>Thriller</option>
+            <option>Animated</option>
         </select>
     </div>
     <div class="form-group">
@@ -91,7 +110,7 @@
             <span onclick="setRating(5)">★</span>
         </div>
     </div>
-    <button onclick="addMovie()">Add Movie</button>
+    <button class="add-btn" onclick="addMovie()">Add Movie</button>
 
     <h3>Movie List</h3>
     <div id="movie-list"></div>
@@ -107,19 +126,47 @@
     }
 
     function addMovie() {
-        const title = document.getElementById('title').value;
-        const year = document.getElementById('year').value;
-        const genre = document.getElementById('genre').value;
-        
-        if (!title || !year) return alert("Please fill in all fields!");
+        const titleInput = document.getElementById('title');
+        const yearInput = document.getElementById('year');
+        const genreInput = document.getElementById('genre');
 
-        const movie = { title, year, genre, rating: currentRating.toString() };
+        const title = titleInput.value.trim();
+        const year = yearInput.value.trim();
+        const genre = genreInput.value;
+        
+        if (!title || !year || currentRating === 0) return alert("Please fill in all fields!");
 
         let movies = JSON.parse(localStorage.getItem('movies') || '[]');
-        movies.push(movie);
+        
+        const existingIndex = movies.findIndex(m => m.title.toLowerCase() === title.toLowerCase());
+
+        if (existingIndex !== -1) {
+            const oldRating = parseInt(movies[existingIndex].rating);
+            const averagedRating = Math.round((oldRating + currentRating) / 2);
+            
+            movies[existingIndex].year = year;
+            movies[existingIndex].genre = genre;
+            movies[existingIndex].rating = averagedRating;
+        } else {
+            const movie = { title, year, genre, rating: currentRating };
+            movies.push(movie);
+        }
+
         localStorage.setItem('movies', JSON.stringify(movies));
         
+        titleInput.value = '';
+        yearInput.value = '';
+        setRating(0);
         displayMovies();
+    }
+
+    function deleteMovie(index) {
+        if (confirm("Are you sure you want to delete?")) {
+            let movies = JSON.parse(localStorage.getItem('movies') || '[]');
+            movies.splice(index, 1);
+            localStorage.setItem('movies', JSON.stringify(movies));
+            displayMovies();
+        }
     }
 
     function displayMovies() {
@@ -127,9 +174,16 @@
         listDiv.innerHTML = '';
         const movies = JSON.parse(localStorage.getItem('movies') || '[]');
         
-        movies.forEach(m => {
+        movies.forEach((m, index) => {
             const stars = '★'.repeat(m.rating);
-            listDiv.innerHTML += `<div class="movie-item">${m.title} (${m.year}) - ${m.genre}, Rating: <span style="color:gold">${stars}</span></div>`;
+            listDiv.innerHTML += `
+                <div class="movie-item">
+                    <div>
+                        ${m.title} (${m.year}) - ${m.genre}, 
+                        Rating: <span style="color:gold">${stars}</span>
+                    </div>
+                    <button class="delete-btn" onclick="deleteMovie(${index})">Delete</button>
+                </div>`;
         });
     }
 
