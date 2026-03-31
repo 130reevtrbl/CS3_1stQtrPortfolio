@@ -1,5 +1,9 @@
-function plotPoint() {
-    console.log(x0, y0, x, y) // checks the arguments passed to this function
+function plotPoint(x0, y0, x, y) {
+    console.log(x0, y0, x, y); // checks the arguments passed to this function
+
+    var in1 = document.getElementById("in1");
+    var out1 = document.getElementById("out1");
+
     in1.innerHTML = x0 + " " + y0 + " " + x + " " + y;
     var point = document.createElement('div');  
     point.className = 'point';
@@ -9,17 +13,18 @@ function plotPoint() {
     document.getElementById('coordinatePlane').appendChild(point);
 
     if (x > x0 && y > y0){
-      out1.innerHTML = "NE"
+      out1.innerHTML = "NE";
     }
     else if (x < x0 && y < y0){
-      out1.innerHTML = "SO"
+      out1.innerHTML = "SO";
     }
     else if (x > x0 && y < y0){
-      out1.innerHTML = "SE"
+      out1.innerHTML = "SE";
     }
     else if (x < x0 && y > y0){
-      out1.innerHTML = "NO"
+      out1.innerHTML = "NO";
     }
     else{
-      out1.innerHTML = "divisa"
+      out1.innerHTML = "divisa";
     }
+}
